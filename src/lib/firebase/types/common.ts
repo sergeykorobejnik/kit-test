@@ -1,4 +1,4 @@
 export enum FilterDirection {
-    Ascending = 'asc',
-    Descending = 'desc',
+  Ascending = 'asc',
+  Descending = 'desc',
 }

@@ -1,3 +1,3 @@
-export * from './postTransformer'
-export * from './commentTransformer'
-export * from './commentsListTransformer'
+export * from './postTransformer';
+export * from './commentTransformer';
+export * from './commentsListTransformer';
