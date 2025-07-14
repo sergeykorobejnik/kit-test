@@ -30,7 +30,7 @@ const PostsListWrapper: React.FC<PostsListWrapperProps> = ({ initialPosts }) => 
   }
 
   return (
-    <div data-pw="posts-list">
+    <div data-pw="posts-list" className={'w-full'}>
       {posts.map((post) => (
         <Post.Container key={post.id}>
           <Post.Header
