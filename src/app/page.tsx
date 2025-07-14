@@ -1,5 +1,5 @@
 import {getPosts} from "@/lib/firebase/api";
-import MainPagePostsList from "@/components/pages/MainPagePostsList";
+import MainPagePostsList from "@/components/pages/home/MainPagePostsList";
 
 
 export default async function Home() {

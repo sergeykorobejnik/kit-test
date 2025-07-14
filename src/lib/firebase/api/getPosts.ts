@@ -1,4 +1,6 @@
+'use server'
 import 'server-only'
+
 
 import {fireStore} from "@/lib/firebase/core";
 import {Post} from "@/lib/firebase/schemas/posts";
