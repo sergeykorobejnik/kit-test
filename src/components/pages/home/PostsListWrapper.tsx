@@ -30,7 +30,7 @@ const PostsListWrapper: React.FC<PostsListWrapperProps> = ({ initialPosts }) => 
   }
 
   return (
-    <>
+    <div data-pw="posts-list">
       {posts.map((post) => (
         <Post.Container key={post.id}>
           <Post.Header
@@ -49,7 +49,7 @@ const PostsListWrapper: React.FC<PostsListWrapperProps> = ({ initialPosts }) => 
           <Post.CommentCounter count={post.userComments.length} />
         </Post.Container>
       ))}
-    </>
+    </div>
   );
 };
 
