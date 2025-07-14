@@ -7,7 +7,7 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/shadcn/alert-dialog"
-import React from "react";
+import React, {useEffect} from "react";
 import {useForm} from "react-hook-form";
 import {NewPost} from "@/lib/firebase/types";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/shadcn/form";
@@ -32,6 +32,12 @@ const PostCreateModal: React.FC<PostCreateModalProps> = ({onSubmit, isOpen, onOp
             body: ''
         }
     })
+
+    useEffect(() => {
+        if (!isOpen) {
+            form.reset()
+        }
+    }, [isOpen, form]);
 
     return (
         <Form {...form}>
