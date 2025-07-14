@@ -3,7 +3,7 @@ import React, {useRef} from 'react';
 import {useAppDispatch, useAppSelector, useAppStore} from "@/lib/redux";
 import {updatePosts} from "@/lib/redux/features/posts/postsSlice";
 import {Post} from "@/components/ui/Post";
-import {Posts} from "@/lib/firebase/schemas";
+import {Posts} from "@/lib/firebase/types";
 
 interface PostsListWrapperProps {
     initialPosts: Posts

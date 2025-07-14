@@ -15,6 +15,7 @@ if (getApps()?.length === 0) {
     }, 'root');
 }
 
+export const fb = getApp('root');
 
 export const fireStore = getFirestore(getApp('root'));
 

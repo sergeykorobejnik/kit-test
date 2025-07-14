@@ -3,7 +3,7 @@ import 'server-only'
 
 
 import {fireStore} from "@/lib/firebase/core";
-import {Post} from "@/lib/firebase/schemas/posts";
+import {Post} from "@/lib/firebase/types/posts";
 
 export async function getPosts() {
     const postsSnapshot = await fireStore.collection('posts').get();
