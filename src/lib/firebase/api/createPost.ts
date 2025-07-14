@@ -6,7 +6,6 @@ import {firestore} from "firebase-admin";
 import FieldValue = firestore.FieldValue;
 
 export async function createPost(payload: NewPost) {
-    console.log(payload);
     await fireStore.collection('posts').add({
         ...payload,
         created_at: FieldValue.serverTimestamp(),

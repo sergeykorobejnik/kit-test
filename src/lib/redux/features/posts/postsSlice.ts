@@ -1,28 +1,44 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {NewPost, Post} from "@/lib/firebase/types";
+import {FilterDirection, NewPost, Post, PostDocument} from "@/lib/firebase/types";
 import {createPost as createPostReq, getPosts as fetchPosts} from "@/lib/firebase/api";
+import {RootState} from "@/lib/redux";
 
 interface PostsState {
     loading: boolean,
     posts: Post[],
     error: null | string,
+    filters: {
+        orderBy: keyof PostDocument;
+        direction: FilterDirection;
+    }
 }
+
+export type FiltersPayload = Partial<PostsState['filters']>
 
 const initialState: PostsState = {
     loading: false,
     posts: [],
     error: null,
+    filters: {
+        orderBy: 'created_at',
+        direction: FilterDirection.Ascending,
+    }
 }
 
 export const getPosts = createAsyncThunk(
     'posts/getPosts',
-    async (_, {rejectWithValue, dispatch}) => {
+    async (_, {rejectWithValue, dispatch, getState}) => {
         try {
+            const state = getState() as RootState
+
             dispatch(updateLoading(true))
             return {
                 success: true,
-                data: await fetchPosts(),
+                data: await fetchPosts({
+                    filters: state.posts.filters
+                }),
             };
+
         } catch (error) {
             return rejectWithValue('Whoa we messed up with something ;)')
         }
@@ -57,6 +73,9 @@ export const postsSlice = createSlice({
         },
         updateLoading: (state, action: PayloadAction<boolean>) => {
             state.loading = action.payload;
+        },
+        updateFilters: (state, action: PayloadAction<FiltersPayload>) => {
+            state.filters = {...state.filters, ...action.payload};
         }
     },
     extraReducers: builder => {
@@ -76,6 +95,6 @@ export const postsSlice = createSlice({
     }
 })
 
-export const {updatePosts, updateLoading} = postsSlice.actions;
+export const {updatePosts, updateLoading, updateFilters} = postsSlice.actions;
 
 export default postsSlice.reducer
