@@ -3,8 +3,9 @@ import 'server-only'
 
 
 import {fireStore} from "@/lib/firebase/core";
-import {Post, PostDocument} from "@/lib/firebase/types/posts";
+import {PostDocument} from "@/lib/firebase/types/posts";
 import {FilterDirection} from "@/lib/firebase/types";
+import {commentsListTransformer, postTransformer} from "@/lib/firebase/transfromers";
 
 export interface GetPostsOpts {
     filters?: {
@@ -25,31 +26,10 @@ export async function getPosts(opts?: GetPostsOpts) {
 
     const posts = postsSnapshot.docs.map(async doc => {
         const postDocData = doc.data();
-        let userComments: any[] = [];
 
-        if (postDocData.user_comments && postDocData.user_comments.length > 0) {
-            const commentsPromises = postDocData.user_comments.map((ref: any) => ref.get());
-            const commentsDocs = await Promise.all(commentsPromises);
-            userComments = commentsDocs.map(userCommentDoc => {
-                const userCommentDocData = userCommentDoc.data();
-                return {
-                    id: userCommentDoc.id,
-                    parentId: doc.id,
-                    author: userCommentDocData.author,
-                    body: userCommentDocData.body,
-                    createdAt: userCommentDocData.created_at.toDate().toDateString(),
-                }
-            })
-        }
+        let userComments = await commentsListTransformer(doc.id, postDocData.user_comments)
 
-        return {
-            id: doc.id,
-            createdAt: postDocData.created_at.toDate().toDateString(),
-            title: postDocData.title,
-            body: postDocData.body,
-            author: postDocData.author,
-            userComments,
-        } as Post;
+        return postTransformer(doc.id, postDocData, userComments);
     });
 
     return await Promise.all(posts);

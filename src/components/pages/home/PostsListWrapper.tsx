@@ -36,6 +36,7 @@ const PostsListWrapper: React.FC<PostsListWrapperProps> = ({initialPosts}) => {
                 posts.map((post) => (
                     <Post.Container key={post.id}>
                         <Post.Header
+                            href={`/posts/${post.id}`}
                             title={
                                 Post
                                     .util

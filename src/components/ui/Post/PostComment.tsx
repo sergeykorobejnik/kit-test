@@ -9,7 +9,7 @@ interface PostCommentProps extends React.HTMLProps<HTMLDivElement> {
     createdAt: string;
 }
 
-const PostComment: React.FC<PostCommentProps> = ({author, body, createdAt, ...props}) => {
+const PostComment: React.FC<PostCommentProps> = ({author, body, createdAt, parentId, ...props}) => {
     return (
         <div {...props}>
             <div className={"flex items-center mb-1 gap-4"}>

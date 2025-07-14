@@ -6,12 +6,14 @@ import {postContentFormater} from "@/components/ui/Post/_util/contentTransformer
 import PostComment from "@/components/ui/Post/PostComment";
 import PostCommentsSection from "@/components/ui/Post/PostCommentsSection";
 import PostCommentCounter from "@/components/ui/Post/PostCommentCounter";
+import PostEmptyComments from "@/components/ui/Post/PostEmptyComments";
 
 
 export const Post = {
     Body: PostBody,
     Container: PostContainer,
     Header: PostHeader,
+    EmptyComments: PostEmptyComments,
     Comment: PostComment,
     CommentCounter: PostCommentCounter,
     CommentsSection: PostCommentsSection,

@@ -1,3 +1,11 @@
+export interface CommentDocument {
+    id: string;
+    author: string;
+    body: string;
+    created_at: FirebaseFirestore.Timestamp;
+    edited_at: FirebaseFirestore.Timestamp;
+}
+
 export interface Comment {
     id: string;
     parentId: string;

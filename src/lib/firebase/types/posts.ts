@@ -5,9 +5,9 @@ export interface PostDocument {
     title: string;
     author: string;
     body: string;
-    created_at: string;
-    edited_at: string;
-    user_comments: Comment[];
+    created_at: FirebaseFirestore.Timestamp;
+    edited_at: FirebaseFirestore.Timestamp;
+    user_comments: FirebaseFirestore.DocumentReference[];
 }
 
 export interface Post {

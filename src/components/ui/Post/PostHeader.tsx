@@ -1,18 +1,20 @@
 import React from 'react';
 import {Timer, User} from "lucide-react";
+import Link from "next/link";
 
 interface PostTitleProps extends React.HTMLAttributes<HTMLDivElement> {
+    href: string;
     title: string;
     author: string;
     createdAt: string;
 }
 
-const PostHeader: React.FC<PostTitleProps> = ({title, author, createdAt, ...props}) => {
+const PostHeader: React.FC<PostTitleProps> = ({title, author, createdAt, href, ...props}) => {
     return (
         <div className={"mb-2"} {...props}>
-            <p className="text-xl bold mb-1">
+            <Link className="text-xl bold mb-1" href={href}>
                 {title}
-            </p>
+            </Link>
             <div className={"flex items-center mb-2 gap-4"}>
                 <div className={'flex items-center gap-1'}>
                     <User size={16}/>
