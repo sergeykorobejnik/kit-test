@@ -38,7 +38,7 @@ export const getPosts = createAsyncThunk(
           filters: state.posts.filters,
         }),
       };
-    } catch (error) {
+    } catch (e) {
       return rejectWithValue('Whoa we messed up with something ;)');
     }
   },
@@ -55,7 +55,7 @@ export const createPost = createAsyncThunk(
       return {
         success: true,
       };
-    } catch (error) {
+    } catch (e) {
       return rejectWithValue('Whoa we messed up with something ;)');
     }
   },

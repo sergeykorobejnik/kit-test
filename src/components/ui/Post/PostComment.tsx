@@ -13,6 +13,7 @@ const PostComment: React.FC<PostCommentProps> = ({
   author,
   body,
   createdAt,
+  // eslint-disable-line
   parentId,
   ...props
 }) => {

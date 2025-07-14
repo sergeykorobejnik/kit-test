@@ -1,6 +1,6 @@
 'use client';
 import React, { useRef } from 'react';
-import { useAppDispatch, useAppSelector, useAppStore } from '@/lib/redux';
+import { useAppSelector, useAppStore } from '@/lib/redux';
 import { updatePosts } from '@/lib/redux/features/posts/postsSlice';
 import { Post } from '@/components/ui/Post';
 import { Posts } from '@/lib/firebase/types';
@@ -11,7 +11,6 @@ interface PostsListWrapperProps {
 
 const PostsListWrapper: React.FC<PostsListWrapperProps> = ({ initialPosts }) => {
   const store = useAppStore();
-  const dispatch = useAppDispatch();
 
   const initialized = useRef(false);
 

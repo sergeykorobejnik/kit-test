@@ -25,9 +25,9 @@ import { NewPostSchema } from '@/lib/schemas/posts/Post';
 import { Button } from '@/components/shadcn/button';
 
 interface PostCreateModalProps {
-  onSubmit: (payload: NewPost) => any;
+  onSubmit: (payload: NewPost) => void;
   isOpen: boolean;
-  onOpenChange: (value: boolean) => any;
+  onOpenChange: (value: boolean) => void;
 }
 
 const PostCreateModal: React.FC<PostCreateModalProps> = ({ onSubmit, isOpen, onOpenChange }) => {

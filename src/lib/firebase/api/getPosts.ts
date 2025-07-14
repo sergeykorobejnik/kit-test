@@ -28,7 +28,7 @@ export async function getPosts(opts?: GetPostsOpts) {
   const posts = postsSnapshot.docs.map(async (doc) => {
     const postDocData = doc.data();
 
-    let userComments = await commentsListTransformer(doc.id, postDocData.user_comments);
+    const userComments = await commentsListTransformer(doc.id, postDocData.user_comments);
 
     return postTransformer(doc.id, postDocData, userComments);
   });

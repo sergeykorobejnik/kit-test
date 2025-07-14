@@ -67,8 +67,8 @@ const filterLabels: FilterLabel[] = [
 ];
 
 interface PostsActionsBarProps {
-  onPostCreate: (payload: NewPost) => any;
-  onFilterChange: (payload: FiltersPayload) => any;
+  onPostCreate: (payload: NewPost) => void;
+  onFilterChange: (payload: FiltersPayload) => void;
   creationModalControls: ReturnType<typeof useDisclosure>;
 }
 
@@ -77,8 +77,6 @@ const PostsActionsBar: React.FC<PostsActionsBarProps> = ({
   creationModalControls,
   onFilterChange,
 }) => {
-  const modalControl = useDisclosure(false);
-
   const filters = useAppSelector((state) => state.posts.filters);
 
   const selectedFilter = useMemo(() => {
