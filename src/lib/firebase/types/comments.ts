@@ -14,4 +14,10 @@ export interface Comment {
   createdAt: string;
 }
 
+export interface NewComment {
+  postId: string;
+  author: string;
+  body: string;
+}
+
 export type Comments = Comment[];

@@ -1,11 +1,17 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FilterDirection, NewPost, Post, PostDocument } from '@/lib/firebase/types';
-import { createPost as createPostReq, getPosts as fetchPosts } from '@/lib/firebase/api';
+import { FilterDirection, NewComment, NewPost, Post, PostDocument } from '@/lib/firebase/types';
+import {
+  createComment as createCommentReq,
+  createPost as createPostReq,
+  getPost as getPostReq,
+  getPosts as fetchPosts,
+} from '@/lib/firebase/api';
 import { RootState } from '@/lib/redux';
 
 interface PostsState {
   loading: boolean;
   posts: Post[];
+  selectedPost: Post | null;
   error: null | string;
   filters: {
     orderBy: keyof PostDocument;
@@ -13,11 +19,16 @@ interface PostsState {
   };
 }
 
+interface GetPostPayload {
+  postId: string;
+}
+
 export type FiltersPayload = Partial<PostsState['filters']>;
 
 const initialState: PostsState = {
   loading: false,
   posts: [],
+  selectedPost: null,
   error: null,
   filters: {
     orderBy: 'created_at',
@@ -44,13 +55,54 @@ export const getPosts = createAsyncThunk(
   },
 );
 
+export const getPost = createAsyncThunk(
+  'posts/getPost',
+  async (payload: GetPostPayload, { rejectWithValue, dispatch }) => {
+    try {
+      dispatch(updateLoading(true));
+
+      await getPostReq({ id: payload.postId });
+
+      return {
+        success: true,
+        data: await getPostReq({
+          id: payload.postId,
+        }),
+      };
+    } catch (e) {
+      return rejectWithValue('Whoa we messed up with something ;)');
+    }
+  },
+);
+
 export const createPost = createAsyncThunk(
   'posts/createPost',
   async (payload: NewPost, { rejectWithValue, dispatch }) => {
     try {
+      dispatch(updateLoading(true));
+
       await createPostReq(payload);
 
       dispatch(getPosts());
+
+      return {
+        success: true,
+      };
+    } catch (e) {
+      return rejectWithValue('Whoa we messed up with something ;)');
+    }
+  },
+);
+
+export const createComment = createAsyncThunk(
+  'posts/createComment',
+  async (payload: NewComment, { rejectWithValue, dispatch }) => {
+    try {
+      dispatch(updateLoading(true));
+
+      await createCommentReq({ value: payload });
+
+      dispatch(getPost({ postId: payload.postId }));
 
       return {
         success: true,
@@ -67,6 +119,11 @@ export const postsSlice = createSlice({
   reducers: {
     updatePosts: (state, action: PayloadAction<Post[]>) => {
       state.posts = action.payload;
+      state.loading = false;
+      state.error = null;
+    },
+    updateSelectedPost: (state, action: PayloadAction<Post>) => {
+      state.selectedPost = action.payload;
       state.loading = false;
       state.error = null;
     },
@@ -90,10 +147,22 @@ export const postsSlice = createSlice({
       .addCase(getPosts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      .addCase(getPost.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getPost.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedPost = action.payload.data;
+      })
+      .addCase(getPost.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });
 
-export const { updatePosts, updateLoading, updateFilters } = postsSlice.actions;
+export const { updatePosts, updateLoading, updateFilters, updateSelectedPost } = postsSlice.actions;
 
 export default postsSlice.reducer;

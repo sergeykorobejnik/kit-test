@@ -21,7 +21,7 @@ const PostsListWrapper: React.FC<PostsListWrapperProps> = ({ initialPosts }) => 
 
   const { posts, loading } = useAppSelector((state) => state.posts);
 
-  if (loading) {
+  if (!posts && loading) {
     return (
       <div className="pt-6 pb-6">
         <span>Loading...</span>
@@ -30,7 +30,7 @@ const PostsListWrapper: React.FC<PostsListWrapperProps> = ({ initialPosts }) => 
   }
 
   return (
-    <div data-pw="posts-list" className={'w-full'}>
+    <div data-pw="posts-list" className={'flex w-full flex-col gap-4'}>
       {posts.map((post) => (
         <Post.Container key={post.id}>
           <Post.Header

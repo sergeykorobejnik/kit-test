@@ -21,7 +21,7 @@ import {
 import { Input } from '@/components/shadcn/input';
 import { Textarea } from '@/components/shadcn/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { NewPostSchema } from '@/lib/schemas/posts/Post';
+import { NewPostSchema } from '@/lib/schemas/posts/post';
 import { Button } from '@/components/shadcn/button';
 
 interface PostCreateModalProps {
